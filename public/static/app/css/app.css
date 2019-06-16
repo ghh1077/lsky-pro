@@ -81,24 +81,17 @@ main .register-container {
   margin-top: 4rem;
   margin-bottom: 4rem;
 }
-main .not-logged-in {
-  margin: 10rem 0;
-  text-align: center;
-}
-main .not-logged-in h2 {
-  margin-bottom: 2rem;
-}
 main .upload-container .title {
   margin: 1rem 0;
 }
 main .upload-container .title h1 {
   font-weight: 300;
-  font-size: 3rem;
+  font-size: 1.8rem;
   text-shadow: -5px 5px 0 rgba(0, 0, 0, 0.1);
 }
 main .upload-container .title p {
   margin-top: 1rem;
-  font-size: 1.3rem;
+  font-size: 0.8rem;
   color: #999;
 }
 main .upload-container .success-info {
@@ -114,7 +107,7 @@ main .upload-container .success-info ul {
 main .upload-container .success-info ul li {
   position: relative;
   margin-top: 0.5rem;
-  padding: 1rem;
+  padding: 0.8rem;
   border: 1px solid #dadada;
   background-color: #f7f7f7;
   font-size: 14px;
@@ -136,6 +129,16 @@ main .upload-container .success-info ul li:hover i.icon-copy {
   right: 10px;
   color: #00b0ff;
   cursor: pointer;
+}
+main .console-container .mdui-table td,
+main .console-container .mdui-table th {
+  padding: 12px 28px;
+}
+main .console-container div.item > div {
+  border-radius: 3px;
+}
+main .console-container div.item > div p {
+  margin-bottom: 20px;
 }
 main .system-container .mdui-textfield-label {
   pointer-events: inherit;
@@ -302,6 +305,22 @@ main .mdui-table td,
 main .mdui-table th {
   padding: 0 10px;
 }
+main .mask {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  background: rgba(255, 255, 255, 0.47058824);
+  z-index: 99;
+}
+main .mask .content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
 .krajee-default .file-footer-caption {
   margin-bottom: 28px;
 }
@@ -310,8 +329,10 @@ main .mdui-table th {
   height: 20px;
   font-size: 12px;
 }
+.file-input {
+  font-size: 1rem;
+}
 .file-input .file-preview {
-  border-radius: 0;
   border: none;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.13);
 }
@@ -319,9 +340,16 @@ main .mdui-table th {
   top: 6px;
   right: 6px;
 }
+.file-input .file-preview .file-drop-zone-title {
+  font-size: 1.2em;
+}
 .file-input .file-preview .file-preview-thumbnails .krajee-default.file-preview-frame {
-  border: 0;
+  border: 2px solid transparent;
+  transition: all 0.3s;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.13);
+}
+.file-input .file-preview .file-preview-thumbnails .krajee-default.file-preview-frame.hover {
+  border: 2px solid red;
 }
 .file-input .file-preview .kv-fileinput-error ul {
   list-style: none;
@@ -329,15 +357,14 @@ main .mdui-table th {
 .file-input .file-caption-main .form-control {
   box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.13);
   border: none;
-  border-radius: 0;
   height: 40px;
-  padding: 10px 18px;
+  padding: 8px 18px;
 }
 .file-input .file-caption-main .form-control:focus {
   z-index: 0;
 }
 .file-input .file-caption-main .btn {
-  padding: 10px 18px;
+  padding: 8px 18px;
   border: 0;
 }
 .file-input .file-caption-main .btn:first-child {
@@ -349,10 +376,15 @@ main .mdui-table th {
 .file-input .file-caption-main .btn-file {
   border-color: #2383eb;
   background-color: #2383eb;
-  border-radius: 0;
 }
 .file-input .file-caption-main .input-group-append {
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.13);
+}
+.file-input .file-caption-main .input-group-append .btn {
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.13);
+}
+.file-input .file-caption-main .file-caption .file-caption-name {
+  font-size: 90%;
 }
 .file-zoom-fullscreen.modal {
   z-index: 999999;

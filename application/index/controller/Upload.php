@@ -101,14 +101,17 @@ class Upload extends Base
         // 图片鉴黄
         $suspicious = 0;
         if ($this->config['open_audit']) {
-            $client = new Client();
+            $client = new Client(['timeout' => 30.00]);
             $response = $client->get("https://www.moderatecontent.com/api/v2?key={$this->config['audit_key']}&url={$url}");
             if (200 == $response->getStatusCode()) {
                 $result = json_decode($response->getBody()->getContents());
                 if (0 == $result->error_code) {
                     if ($result->rating_index >= $this->config['audit_index']) {
-                        /*$strategy->delete($pathname);
-                        throw new Exception('图片[' . $image->getInfo('name') . ']涉嫌违规，禁止上传！');*/
+                        // 是否直接拦截色情图片
+                        if (Config::get('site.intercept_salacity')) {
+                            $strategy->delete($pathname);
+                            throw new Exception('图片[' . $image->getInfo('name') . ']涉嫌违规，禁止上传！');
+                        }
                         $suspicious = 1;
                     }
                 } else {
