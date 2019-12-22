@@ -9,13 +9,15 @@
 [官网](https://www.lsky.pro) &nbsp;
 [手册](https://www.kancloud.cn/wispx/lsky-pro) &nbsp;
 [演示](https://pic.iqy.ink) &nbsp;
+[Chrome 拓展](https://github.com/wisp-x/lsky-pro-chrome-extension)
 [Telegram 群组](https://t.me/lsky_pro)
 
 [![License](https://img.shields.io/badge/license-GPL_V3.0-yellowgreen.svg)](https://github.com/wisp-x/lsky-pro/blob/master/LICENSE)
 [![PHP](https://img.shields.io/badge/PHP->=5.6-orange.svg)](http://php.net)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/wisp-x/lsky-pro.svg)](https://github.com/wisp-x/lsky-pro)
 
-> 下载稳定版请点击[这里](https://github.com/wisp-x/lsky-pro/releases)，发现 bug 可发送邮件至邮箱：i@wispx.cn，或提交 [issues](https://github.com/wisp-x/lsky-pro/issues)，确认 bug 后我会及时修复，谢谢！
+> 下载稳定版请点击[这里](https://github.com/wisp-x/lsky-pro/releases)，发现 bug 可发送邮件至邮箱：i@wispx.cn，或提交 [issues](https://github.com/wisp-x/lsky-pro/issues)  
+> 下载速度慢的可以移步 Coding https://dev.tencent.com/u/wispx/p/lsky-pro-releases/git
 
 ![homepage.png](./public/static/app/images/demo/1.png)
 ![homepage.png](./public/static/app/images/demo/2.png)
@@ -104,6 +106,13 @@ Container::get('app')->bind('index')->run()->send();
 - QQ：1591788658
 - Email: i@wispx.cn
 - Blog：[https://www.wispx.cn](https://www.wispx.cn)
+
+捐赠
+---
+Lsky Pro 的开发和更新等，都是作者在空余时间独立开发，并免费开源使用，如果您认可我的作品，并且觉得对你有所帮助我们愿意接受来自各方面的捐赠😃。  
+![支付宝](./public/static/app/images/demo/alipay.png?t=201911251121) 
+![微信](./public/static/app/images/demo/wechat.jpeg?t=201911251121)  
+左图支付宝，右图微信  
 
 鸣谢
 ---
