@@ -33,20 +33,18 @@ class Images extends Base
         $this->assign('strategy_list', $this->strategyList);
     }
 
-    public function index($where = '', $keyword = '', $limit = 15)
+    public function index($strategy = '', $user_id = '', $suspicious = 0, $keyword = '', $limit = 25)
     {
-        $where = json_decode($where, true);
-        if (null == $where) {
-            $where = [
-                'suspicious' => 0,
-            ];
-        }
         $model = new ImagesModel();
-        foreach ($where as $field => $value) {
-            $model = $model->where($field, $value);
+        $model = $model->where('suspicious', $suspicious);
+        if ($strategy) {
+            $model = $model->where('strategy', $strategy);
+        }
+        if ($user_id) {
+            $model = $model->where('user_id', $user_id);
         }
         if (!empty($keyword)) {
-            $model = $model->where('pathname|sha1|md5|ip', 'like', "%{$keyword}%");
+            $model = $model->where('pathname|alias_name|sha1|md5|ip', 'like', "%{$keyword}%");
         }
         $images = $model->order('id', 'desc')->paginate($limit, false, [
             'query' => [
@@ -62,9 +60,9 @@ class Images extends Base
             'images' => $images,
             'keyword' => $keyword,
             'strategyList' => $this->strategyList,
-            'strategy' => isset($where['strategy']) ? $where['strategy'] : '',
-            'suspicious' => isset($where['suspicious']) ? $where['suspicious'] : 0,
-            'user_id' => isset($where['user_id']) ? $where['user_id'] : null,
+            'strategy' => $strategy,
+            'suspicious' => $suspicious,
+            'user_id' => $user_id,
         ]);
 
         return $this->fetch();
@@ -77,23 +75,17 @@ class Images extends Base
             try {
                 $id = $this->request->post('id');
                 $deletes = []; // 需要删除的文件
-                if (is_array($id)) {
-                    $images = ImagesModel::all($id);
-                    foreach ($images as &$value) {
+                $images = ImagesModel::where('id', 'in', $id)->select();
+                foreach ($images as &$value) {
+                    // 查找是否有相同 md5 的文件记录，有的话则只删除记录不删除文件
+                    if (!$this->exists($value)) {
                         $deletes[$value->strategy][] = $value->pathname;
-                        $value->delete();
-                        unset($value);
                     }
-                } else {
-                    $image = ImagesModel::get($id);
-                    if (!$image) {
-                        throw new Exception('没有找到该图片数据');
-                    }
-                    $deletes[$image->strategy][] = $image->pathname;
-                    $image->delete();
+                    $value->delete();
+                    unset($value);
                 }
                 // 是否开启软删除(开启了只删除记录，不删除文件)
-                if (!$this->config['soft_delete']) {
+                if (!$this->getConfig('soft_delete')) {
                     $strategy = [];
                     // 实例化所有储存策略驱动
                     $strategyAll = array_keys($this->strategyList);
@@ -105,11 +97,11 @@ class Images extends Base
                     foreach ($deletes as $key => $val) {
                         if (1 === count($val)) {
                             if (!$strategy[$key]->delete(isset($val[0]) ? $val[0] : null)) {
-                                throw new Exception('删除失败');
+                                // throw new Exception('删除失败');
                             }
                         } else {
                             if (!$strategy[$key]->deletes($val)) {
-                                throw new Exception('批量删除失败');
+                                //  throw new Exception('批量删除失败');
                             }
                         }
                     }
@@ -117,10 +109,21 @@ class Images extends Base
                 Db::commit();
             } catch (Exception $e) {
                 Db::rollback();
-                return $this->error($e->getMessage());
+                $this->error($e->getMessage());
             }
-            return $this->success('删除成功');
+            $this->success('删除成功');
         }
+    }
+
+    /**
+     * 检测除本身图片以外的记录是否存在
+     *
+     * @param ImagesModel $image
+     * @return float|string
+     */
+    private function exists(ImagesModel $image)
+    {
+        return ImagesModel::where('id', 'neq', $image->id)->where('md5', $image->md5)->count();
     }
 
     public function getIpInfo()
@@ -138,11 +141,11 @@ class Images extends Base
                     }
                 }
             } catch (Exception $e) {
-                return $this->error('获取失败');
+                $this->error('获取失败');
             } catch (RequestException $e) {
-                return $this->error('淘宝接口发生异常，状态码：' . $response->getStatusCode());
+                $this->error('淘宝接口发生异常，状态码：' . $response->getStatusCode());
             }
-            return $this->success('获取成功', null, $data);
+            $this->success('获取成功', null, $data);
         }
     }
 }
