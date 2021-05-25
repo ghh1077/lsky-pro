@@ -132,6 +132,7 @@ INSERT INTO `lsky_config` (`id`, `key`, `type`, `input_type`, `name`, `title`, `
 (NULL, 'mail', 'text', 'email', 'mail_form_email', '发件人邮箱', NULL, '', ''),
 
 (NULL, 'other', 'bool', 'checkbox', 'soft_delete', '软删除', '删除图片时不删除源文件，不建议开启', '0', ''),
+(NULL, 'other', 'bool', 'checkbox', 'open_gallery', '开启画廊', '开启画廊功能，游客上传的图片将会出现在画廊中', '0', ''),
 (NULL, 'other', 'bool', 'checkbox', 'open_api', '开启API', '是否开放接口', '0', ''),
 (NULL, 'other', 'textarea', 'textarea', 'ban_ip', '封禁IP', '封禁IP, 多个使用逗号隔开', '', ''),
 
@@ -166,8 +167,8 @@ INSERT INTO `lsky_config` (`id`, `key`, `type`, `input_type`, `name`, `title`, `
 
 (NULL, 'audit', 'bool', 'checkbox', 'open_audit', '开启图片鉴黄', '接口申请地址：<a href="https://www.moderatecontent.com" target="_blank">https://www.moderatecontent.com</a>', '0', ''),
 (NULL, 'audit', 'text', 'text', 'audit_key', 'Key', NULL, '', ''),
-(NULL, 'audit', 'select', 'text', 'audit_index', '内容评级', '1=所有人，2=少年，3=成人', '3', '{\"1\": \"所有人\", \"2\": \"少年\", \"3\": \"成人\"}'),
+(NULL, 'audit', 'select', 'text', 'audit_index', '内容评级', '1=非常严格，2=严格，3=一般', '3', '{\"1\": \"非常严格\", \"2\": \"严格\", \"3\": \"一般\"}'),
 
-(NULL, '', 'text', 'text', 'system_version', '系统版本', NULL, '1.6.1', '');
+(NULL, '', 'text', 'text', 'system_version', '系统版本', NULL, '1.6.3', '');
 
 INSERT INTO `lsky_group` (`id`, `strategy`, `name`, `default`, `update_time`, `create_time`) VALUES (NULL, 'local', '默认组', '1', '0', '0');
